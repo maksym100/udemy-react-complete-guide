@@ -11,9 +11,9 @@ class App extends Component {
     ]
   }
 
-  switchNameHandler = () => {
+  switchNameHandler = (newName) => {
     const newState = {... this.state}
-    newState.persons[0].name = ':o Name has been changed'
+    newState.persons[0].name = newName
     this.setState(newState);
   }
 
@@ -22,9 +22,15 @@ class App extends Component {
       <div className="App"> 
         <h1>Hi, I'm a React App</h1>
         <p>This is really working!</p>
-        <button onClick={this.switchNameHandler}>Switch Name</button>
-        <Person name={this.state.persons[0].name} age={this.state.persons[0].age} />
-        <Person name={this.state.persons[1].name} age={this.state.persons[1].age}>
+        <button onClick={this.switchNameHandler.bind(this, ':o Name has changed')}>Switch Name</button>
+        <Person 
+          name={this.state.persons[0].name} 
+          age={this.state.persons[0].age} 
+          click={this.switchNameHandler.bind(this, ':o Other Name')}
+        />
+        <Person
+          name={this.state.persons[1].name} 
+          age={this.state.persons[1].age}>
           InnerText!
         </Person>
       </div>
