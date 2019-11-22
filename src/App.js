@@ -8,7 +8,8 @@ class App extends Component {
     persons : [
       {name: 'Max', age: 27 },
       {name: 'Olga', age: 30 }
-    ]
+    ],
+    showPersons: false
   }
 
   switchNameHandler = (newName) => {
@@ -21,6 +22,12 @@ class App extends Component {
     const newState = {...this.state}
     newState.persons[0].name = event.target.value
     this.setState(newState);
+  }
+
+  togglePersonsHandler = (event) => {
+      const newState = {...this.state}
+      newState.showPersons = !this.state.showPersons;
+      this.setState(newState)
   }
 
   render() {
@@ -38,10 +45,13 @@ class App extends Component {
         <p>This is really working!</p>
         <button 
           style={style}
-          onClick={() => this.switchNameHandler(':o Name has changed')}
+          onClick={this.togglePersonsHandler}
         >
           Switch Name
         </button>
+
+        { this.state.showPersons ?
+        <div>
         <Person 
           name={this.state.persons[0].name} 
           age={this.state.persons[0].age} 
@@ -53,6 +63,8 @@ class App extends Component {
           age={this.state.persons[1].age}>
           InnerText!
         </Person>
+        </div> : null
+        }
       </div>
     );
   }
