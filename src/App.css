@@ -5,3 +5,11 @@
 h1 {
   border: 2px black solid;
 }
+
+.red {
+  color: red;
+}
+
+.bold {
+  font-weight: bold;
+}
