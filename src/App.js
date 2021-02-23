@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import classes from './App.module.css';
 import Person from './Person/Person'
 
 class App extends Component {
@@ -35,49 +35,41 @@ class App extends Component {
   }
 
   render() {
-    const style = {
-      backgroundColor: 'green',
-      font: 'inherit',
-      border: '1px solid blue',
-      padding: '8px',
-      cursor: 'pointer'
-    };
+    let persons = null;
+    let btnClasses = [classes.Button]
+    if(this.state.showPersons) {
+      persons = (
+        <div>
+          {this.state.persons.map((person, index) => {
+            return <Person 
+              name={person.name}
+              age={person.age}
+              click={() => this.deletePersonHandler(index)}
+              changed={(event) => this.nameChangedHandler(event, person.id)}
+              key={person.id}
+            />
+          })}
+        </div>
+      );
+      btnClasses.push(classes.Red)
+    }
 
-let persons = null;
-if(this.state.showPersons) {
-  persons = (
-    <div>
-      {this.state.persons.map((person, index) => {
-        return <Person 
-          name={person.name}
-          age={person.age}
-          click={() => this.deletePersonHandler(index)}
-          changed={(event) => this.nameChangedHandler(event, person.id)}
-          key={person.id}
-        />
-      })}
-    </div>
-  );
+    let assignedClasses = [];
 
-  style.backgroundColor = 'red';
-}
+    if(this.state.persons.length <= 1) {
+      assignedClasses.push('red');
+    }
 
-let classes = [];
-
-if(this.state.persons.length <= 1) {
-  classes.push('red');
-}
-
-if(this.state.persons.length <= 0) {
-  classes.push('bold');
-}
+    if(this.state.persons.length <= 0) {
+      assignedClasses.push('bold');
+    }
 
     return (
-      <div className="App"> 
+      <div className={classes.App}> 
         <h1>Hi, I'm a React App</h1>
-        <p className={classes.join(' ')}>This is really working!</p>
+        <p className={assignedClasses.join(' ')}>This is really working!</p>
         <button 
-          style={style}
+          className={btnClasses.join(' ')}
           onClick={this.togglePersonsHandler}
         >Toogle Persons</button>
 
